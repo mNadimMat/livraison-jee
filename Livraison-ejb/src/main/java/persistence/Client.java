@@ -13,12 +13,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-@JsonIgnoreProperties(ignoreUnknown=true)
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Client implements Serializable {
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@JsonProperty(access=Access.READ_ONLY)
 	protected int id;
 	protected String nom,prenom,mail;

@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import exceptions.AuthenticationException;
 import persistence.Client;
+import persistence.Facteur;
 import services.ClientServiceRemote;
 
 @Path("/client")
@@ -21,11 +22,11 @@ import services.ClientServiceRemote;
 public class ClientRessources {
 	@EJB
 	ClientServiceRemote cs;
-	
+
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response login(@HeaderParam("email")String email,@HeaderParam("password") String password){
-		
+	public Response login(@HeaderParam("email") String email, @HeaderParam("password") String password) {
+
 		try {
 			cs.login(email, password);
 			return Response.ok().build();
@@ -34,22 +35,37 @@ public class ClientRessources {
 			e.printStackTrace();
 			return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}
-		
-		
+
 	}
-	
+
 	@PUT
+	@Path("/client")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response signUp(Client c){
+	public Response signUp(Client c) {
 		try {
 			cs.signUp(c);
 			return Response.ok().build();
 		} catch (AuthenticationException e) {
-			
+
 			return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
 		}
-		
+
+	}
+
+	@PUT
+	@Path("/facteur")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response signUpF(Facteur c) {
+		try {
+			cs.signUp(c);
+			return Response.ok().build();
+		} catch (AuthenticationException e) {
+
+			return Response.status(Status.BAD_REQUEST).entity(e.getMessage()).build();
+		}
+
 	}
 
 }

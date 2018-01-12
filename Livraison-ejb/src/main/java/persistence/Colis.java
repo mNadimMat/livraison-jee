@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Colis implements Serializable{
@@ -14,7 +15,8 @@ public class Colis implements Serializable{
 	private int id;
 	private String nom,destination;
 	private float poids;
-	
+	@ManyToOne
+	private Client client;
 	private ModePaiement modePaiement;
 
 	
@@ -86,6 +88,12 @@ public class Colis implements Serializable{
 		super();
 	}
 	
+	public Client getClient() {
+		return client;
+	}
 	
+	public void setClient(Client client) {
+		this.client = client;
+	}
 	
 }
