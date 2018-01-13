@@ -21,9 +21,7 @@ public class Facteur extends Client {
 		this.cin = cin;
 	}
 
-	public Facteur(String nom, String prenom, String mail, String pwd) {
-		super(nom, prenom, mail, pwd);
-	}
+	
 
 	public String getNum() {
 		return num;

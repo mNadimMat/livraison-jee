@@ -2,24 +2,36 @@ package persistence;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 
 @Entity
+@JsonTypeInfo(
+		use=JsonTypeInfo.Id.NAME,
+		include=As.PROPERTY,
+		property="type")
+@JsonSubTypes(
+		{
+			@Type(value=Facteur.class,name="Facteur")
+		})
 public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@JsonProperty(access=Access.READ_ONLY)
 	protected int id;
-	protected String nom,prenom,mail;
+	@Column(unique=true)
+	private String mail;
+	protected String nom,prenom;
 	
 	protected String pwd;
 	public int getId() {

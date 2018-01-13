@@ -9,7 +9,7 @@ import persistence.Client;
 public interface ClientServiceRemote {
 	public void ajouter(Client c);
 	public Client getByEmail(String email);
-	public void login(String email,String password) throws AuthenticationException;
+	public Client login(String email,String password) throws AuthenticationException;
 	public void signUp(Client c) throws AuthenticationException;
 
 }

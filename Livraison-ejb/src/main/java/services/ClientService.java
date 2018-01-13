@@ -3,6 +3,7 @@ package services;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -20,12 +21,11 @@ public class ClientService implements ClientServiceRemote,ClientServiceLocal {
 	@PersistenceContext
 	EntityManager em;
 	
-	@EJB
+	@Inject
+	
 	CurrentUserLocal cu;
 	
-	public ClientService() {
-		// TODO Auto-generated constructor stub
-	}
+	
 
 	@Override
 	public void ajouter(Client c) {
@@ -46,7 +46,7 @@ public class ClientService implements ClientServiceRemote,ClientServiceLocal {
 	}
 
 	@Override
-	public void login(String email, String password) throws AuthenticationException {
+	public Client login(String email, String password) throws AuthenticationException {
 		Client c = getByEmail(email);
 		if (c == null)
 			throw new AuthenticationException("Compte non trouvé");
@@ -54,7 +54,7 @@ public class ClientService implements ClientServiceRemote,ClientServiceLocal {
 			throw new AuthenticationException("Mot de passe incorrect");
 		}
 		
-		cu.set(c);
+		return c;
 		
 		
 	}
